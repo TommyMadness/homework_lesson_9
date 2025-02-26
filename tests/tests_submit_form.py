@@ -1,115 +1,25 @@
-from pathlib import Path
-
-from selene import browser, have, be, command
-
-import tests
+from model.pages.registration_page import RegistrationPage
+from tests.resources.user_data import data
 
 
-def test_submit_practice_form_by_using_send_keys():
-    browser.open("/automation-practice-form")
+def test_submit_practice_form():
+    registration_page = RegistrationPage()
+    registration_page.open()
 
-    browser.element("#firstName").send_keys("Sponge")
-    browser.element("#lastName").send_keys("Bob")
-    browser.element("#userEmail").send_keys("sponge.bob@bbottom.com")
-    browser.element('[for="gender-radio-1"]').click()
-    browser.element("#userNumber").send_keys("1234567890")
-
-    browser.element("#dateOfBirthInput").click()
-    browser.element(".react-datepicker__month-select").click().element(
-        'option[value="6"]'
-    ).click()
-    browser.element(".react-datepicker__year-select").click().element(
-        'option[value="1986"]'
-    ).click()
-    browser.element(".react-datepicker__day--015").click()
-
-    browser.element("#subjectsInput").send_keys("Biology").press_enter()
-    browser.element("#uploadPicture").set_value(
-        str(Path(tests.__file__).parent.joinpath("resources/kitty.jpg").absolute())
-    )
-
-    browser.all(".custom-control-label").element_by(have.text("Sports")).click()
-
-    browser.element("#currentAddress").type(
+    registration_page.fill_first_name("Sponge")
+    registration_page.fill_last_name("Bob")
+    registration_page.fill_email("sponge.bob@bbottom.com")
+    registration_page.select_gender("Male")
+    registration_page.fill_phone_number("1234567890")
+    registration_page.fill_date_of_birth(1986, 6, 15)
+    registration_page.fill_subject("Biology")
+    registration_page.upload_photo("kitty.jpg")
+    registration_page.select_hobbies("Sports", "Music")
+    registration_page.fill_current_address(
         "24 Conch Street, Bikini Bottom, Marshall Islands 96970"
     )
+    registration_page.select_state("NCR")
+    registration_page.select_city("Delhi")
 
-    browser.element("#state").perform(command.js.scroll_into_view)
-    browser.element("#state").click()
-    browser.all("[id^=react-select][id*=option]").element_by(
-        have.exact_text("NCR")
-    ).click()
-    browser.element("#city").click()
-    browser.all("[id^=react-select][id*=option]").element_by(
-        have.exact_text("Delhi")
-    ).click()
-
-    browser.element("#submit").press_enter()
-
-    browser.element(".modal-content").should(be.visible)
-    browser.element(".table").should(have.text("Sponge Bob"))
-    browser.element(".table").should(have.text("sponge.bob@bbottom.com"))
-    browser.element(".table").should(have.text("Male"))
-    browser.element(".table").should(have.text("1234567890"))
-    browser.element(".table").should(have.text("15 July,1986"))
-    browser.element(".table").should(have.text("Biology"))
-    browser.element(".table").should(have.text("Sports"))
-    browser.element(".table").should(
-        have.text("24 Conch Street, Bikini Bottom, Marshall Islands 96970")
-    )
-    browser.element(".table").should(have.text("NCR Delhi"))
-
-
-def test_submit_practice_form_by_using_type():
-    browser.open("/automation-practice-form")
-
-    browser.element("#firstName").type("Sponge")
-    browser.element("#lastName").type("Bob")
-    browser.element("#userEmail").type("sponge.bob@bbottom.com")
-    browser.element('[for="gender-radio-1"]').click()
-    browser.element("#userNumber").type("1234567890")
-
-    browser.element("#dateOfBirthInput").click()
-    browser.element(".react-datepicker__month-select").click().element(
-        'option[value="6"]'
-    ).click()
-    browser.element(".react-datepicker__year-select").click().element(
-        'option[value="1986"]'
-    ).click()
-    browser.element(".react-datepicker__day--015").click()
-
-    browser.element("#subjectsInput").type("Biology").press_enter()
-    browser.element("#uploadPicture").set_value(
-        str(Path(tests.__file__).parent.joinpath("resources/kitty.jpg").absolute())
-    )
-
-    browser.all(".custom-control-label").element_by(have.text("Sports")).click()
-
-    browser.element("#currentAddress").type(
-        "24 Conch Street, Bikini Bottom, Marshall Islands 96970"
-    )
-
-    browser.element("#state").perform(command.js.scroll_into_view)
-    browser.element("#state").click()
-    browser.all("[id^=react-select][id*=option]").element_by(
-        have.exact_text("NCR")
-    ).click()
-    browser.element("#city").click()
-    browser.all("[id^=react-select][id*=option]").element_by(
-        have.exact_text("Delhi")
-    ).click()
-
-    browser.element("#submit").press_enter()
-
-    browser.element(".modal-content").should(be.visible)
-    browser.element(".table").should(have.text("Sponge Bob"))
-    browser.element(".table").should(have.text("sponge.bob@bbottom.com"))
-    browser.element(".table").should(have.text("Male"))
-    browser.element(".table").should(have.text("1234567890"))
-    browser.element(".table").should(have.text("15 July,1986"))
-    browser.element(".table").should(have.text("Biology"))
-    browser.element(".table").should(have.text("Sports"))
-    browser.element(".table").should(
-        have.text("24 Conch Street, Bikini Bottom, Marshall Islands 96970")
-    )
-    browser.element(".table").should(have.text("NCR Delhi"))
+    registration_page.submit_form()
+    registration_page.should_have_data_registered(data)
