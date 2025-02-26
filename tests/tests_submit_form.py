@@ -35,10 +35,14 @@ def test_submit_practice_form_by_using_send_keys():
     )
 
     browser.element("#state").perform(command.js.scroll_into_view)
-    browser.element("#state").click().element(
-        'div[id^="react-select-3-option"]'
+    browser.element("#state").click()
+    browser.all("[id^=react-select][id*=option]").element_by(
+        have.exact_text("NCR")
     ).click()
-    browser.element("#city").click().element('div[id^="react-select-4-option"]').click()
+    browser.element("#city").click()
+    browser.all("[id^=react-select][id*=option]").element_by(
+        have.exact_text("Delhi")
+    ).click()
 
     browser.element("#submit").press_enter()
 
@@ -86,10 +90,14 @@ def test_submit_practice_form_by_using_type():
     )
 
     browser.element("#state").perform(command.js.scroll_into_view)
-    browser.element("#state").click().element(
-        'div[id^="react-select-3-option"]'
+    browser.element("#state").click()
+    browser.all("[id^=react-select][id*=option]").element_by(
+        have.exact_text("NCR")
     ).click()
-    browser.element("#city").click().element('div[id^="react-select-4-option"]').click()
+    browser.element("#city").click()
+    browser.all("[id^=react-select][id*=option]").element_by(
+        have.exact_text("Delhi")
+    ).click()
 
     browser.element("#submit").press_enter()
 
