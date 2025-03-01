@@ -75,21 +75,5 @@ class RegistrationPage:
     def submit_form(self):
         browser.element("#submit").press_enter()
 
-    @staticmethod
-    def should_have_data_registered(data: dict):
-        expected_values = [
-            data["Student Name"],
-            data["Student Email"],
-            data["Gender"],
-            data["Mobile"],
-            data["Date of Birth"],
-            data["Subjects"],
-            ", ".join(data["Hobbies"]),
-            data["Picture"],
-            data["Address"],
-            data["State and City"],
-        ]
-
-        browser.element(".table").all("td").even.should(
-            have.exact_texts(*expected_values)
-        )
+    def should_have_data_registered(self, *args):
+        browser.element(".table").all("td").even.should(have.exact_texts(args))

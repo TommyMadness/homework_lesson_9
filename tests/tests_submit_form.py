@@ -1,5 +1,4 @@
 from model.pages.registration_page import RegistrationPage
-from tests.resources.user_data import data
 
 
 def test_submit_practice_form():
@@ -23,4 +22,15 @@ def test_submit_practice_form():
     registration_page.select_city("Delhi")
 
     registration_page.submit_form()
-    registration_page.should_have_data_registered(data)
+    registration_page.should_have_data_registered(
+        "Sponge Bob",
+        "sponge.bob@bbottom.com",
+        "Male",
+        "1234567890",
+        "15 July,1986",
+        "Biology",
+        "Sports, Music",
+        "kitty.jpg",
+        "24 Conch Street, Bikini Bottom, Marshall Islands 96970",
+        "NCR Delhi",
+    )
