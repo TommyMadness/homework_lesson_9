@@ -6,6 +6,8 @@ class RegistrationPage:
 
     def open(self):
         browser.open("/automation-practice-form")
+
+    def remove_banners(self):
         browser.all("[id^=google_ads][id$=container__]").with_(timeout=10).wait_until(
             have.size_greater_than_or_equal(3)
         )
@@ -21,14 +23,9 @@ class RegistrationPage:
         browser.element("#userEmail").send_keys(value)
 
     def select_gender(self, value=None):
-        selectors = {
-            "Male": '[for="gender-radio-1"]',
-            "Female": '[for="gender-radio-2"]',
-        }
-        selector = selectors.get(value, '[for="gender-radio-3"]')
-        browser.element(selector).click()
+        browser.all("label").element_by(have.exact_text(value)).click()
 
-    def fill_phone_number(self, value):
+    def fill_mobile_number(self, value):
         browser.element("#userNumber").send_keys(value)
 
     def fill_date_of_birth(self, year, month, day):
