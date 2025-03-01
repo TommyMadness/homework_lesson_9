@@ -75,5 +75,31 @@ class RegistrationPage:
     def submit_form(self):
         browser.element("#submit").press_enter()
 
-    def should_have_data_registered(self, *args):
-        browser.element(".table").all("td").even.should(have.exact_texts(args))
+    @staticmethod
+    def should_registered_user_with(
+        full_name,
+        email,
+        gender,
+        phone,
+        date_of_birth,
+        subjects,
+        hobbies,
+        file_name,
+        address,
+        state,
+        city,
+    ):
+        browser.element(".table").all("td").even.should(
+            have.exact_texts(
+                full_name,
+                email,
+                gender,
+                phone,
+                date_of_birth,
+                subjects,
+                hobbies,
+                file_name,
+                address,
+                f"{state} {city}",
+            )
+        )

@@ -22,15 +22,16 @@ def test_submit_practice_form():
     registration_page.select_city("Delhi")
 
     registration_page.submit_form()
-    registration_page.should_have_data_registered(
-        "Sponge Bob",
-        "sponge.bob@bbottom.com",
-        "Male",
-        "1234567890",
-        "15 July,1986",
-        "Biology",
-        "Sports, Music",
-        "kitty.jpg",
-        "24 Conch Street, Bikini Bottom, Marshall Islands 96970",
-        "NCR Delhi",
+    registration_page.should_registered_user_with(
+        full_name="Sponge Bob",
+        email="sponge.bob@bbottom.com",
+        gender="Male",
+        phone="1234567890",
+        date_of_birth="15 July,1986",
+        subjects="Biology",
+        hobbies="Sports, Music",
+        file_name="kitty.jpg",
+        address="24 Conch Street, Bikini Bottom, Marshall Islands 96970",
+        state="NCR",
+        city="Delhi",
     )
